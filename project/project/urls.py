@@ -13,11 +13,16 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+from django.views.generic.base import RedirectView
 from django.conf.urls import include, url
 from django.contrib import admin
 from acorta import views
 
+favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
+
+
 urlpatterns = [
+    url(r'^favicon\.ico$', favicon_view),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(\d+)$', views.goto, name='Redirector a la web'),
     url(r'^$', views.main, name='Vista principal/formulario'),

@@ -11,7 +11,7 @@ from acorta.models import UrlDB
 def main(request):
     if request.method == 'GET':
         ans = 'Hola. Has hecho un GET. <br><br>'
-        home = 'http://localhost:1234/'
+        home = ('http://localhost:' + request.get_host() + '/')
 
         if UrlDB.objects.all().exists():
             ans += 'Aquí están las URLs ya acortadas: <br>'
@@ -74,7 +74,8 @@ def goto(request, argument):
     
 
 def error(request):
-    home = 'http://localhost:1234/'
+    home = ('http://localhost:' + request.get_host() + '/')
+
     ans = ('<head><b>Error: recurso no encontrado</b></head>. <br><br>' +
             '<a href="' + home + '">Volver al inicio</a>')
     return HttpResponseBadRequest(ans)
